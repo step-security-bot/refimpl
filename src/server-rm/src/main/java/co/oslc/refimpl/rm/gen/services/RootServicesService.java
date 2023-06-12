@@ -18,7 +18,9 @@ package co.oslc.refimpl.rm.gen.services;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
@@ -27,6 +29,8 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
+
+import co.oslc.refimpl.rm.gen.resources.Thing;
 import org.eclipse.lyo.oslc4j.core.model.OslcMediaType;
 import org.eclipse.lyo.oslc4j.core.OSLC4JUtils;
 import co.oslc.refimpl.rm.gen.RMConstants;
@@ -50,7 +54,7 @@ public class RootServicesService {
 
     /**
      * Return a Rational Jazz compliant root services document
-     * 
+     *
      * See https://jazz.net/wiki/bin/view/Main/RootServicesSpec
      */
     @GET
@@ -82,5 +86,24 @@ public class RootServicesService {
         builder.type("application/rdf+xml; charset=UTF-8");
         builder.header(RMConstants.HDR_OSLC_VERSION, RMConstants.OSLC_VERSION_V2);
         return builder.build();
+    }
+
+    @POST
+    @Path("test")
+    @Consumes(MediaType.APPLICATION_XML)
+    public Response receiveThing(Thing aThing) {
+        System.out.println(aThing);
+
+        return Response.ok().build();
+    }
+
+    @GET
+    @Path("test2")
+    @Produces(MediaType.APPLICATION_XML)
+    public Response getThing() {
+//        System.out.println(aThing);
+        Thing thing = new Thing();
+        thing.setName("Jersey");
+        return Response.ok(thing).build();
     }
 }

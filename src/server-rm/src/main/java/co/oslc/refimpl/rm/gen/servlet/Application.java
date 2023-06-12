@@ -49,6 +49,9 @@ import org.eclipse.lyo.oslc4j.core.model.Service;
 import org.eclipse.lyo.oslc4j.core.model.ServiceProvider;
 import org.eclipse.lyo.oslc4j.core.model.ServiceProviderCatalog;
 import org.eclipse.lyo.oslc4j.provider.jena.JenaProvidersRegistry;
+import org.eclipse.lyo.oslc4j.provider.jena.OslcXmlArrayProvider;
+import org.eclipse.lyo.oslc4j.provider.jena.OslcXmlCollectionProvider;
+import org.eclipse.lyo.oslc4j.provider.jena.OslcXmlProvider;
 import org.eclipse.lyo.oslc4j.provider.json4j.Json4JProvidersRegistry;
 
 import co.oslc.refimpl.rm.gen.services.RootServicesService;
@@ -90,6 +93,9 @@ public class Application extends javax.ws.rs.core.Application {
     static
     {
         RESOURCE_CLASSES.addAll(JenaProvidersRegistry.getProviders());
+        RESOURCE_CLASSES.remove(OslcXmlArrayProvider.class);
+        RESOURCE_CLASSES.remove(OslcXmlCollectionProvider.class);
+        RESOURCE_CLASSES.remove(OslcXmlProvider.class);
         RESOURCE_CLASSES.addAll(Json4JProvidersRegistry.getProviders());
         RESOURCE_CLASSES.add(RequirementsService.class);
         RESOURCE_CLASSES.add(Requirement_collectionsService.class);
